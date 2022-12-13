@@ -7,7 +7,7 @@ from plot_crit_points import plot_crit_points_3D_points_cloud
 np.random.seed(0)
 
 
-# Experience 1 : plot the critical points
+# Experiment 1 : plot the critical points
 
 N = 800
 d = 3
@@ -20,7 +20,7 @@ dimension = 1
 plot_crit_points_3D_points_cloud(X, dimension, positive_or_negative)
 
 
-# Experience 2 : compute the persistent homology
+# Experiment 2 : compute the persistent homology
  
 
 epsilon = 0.1
