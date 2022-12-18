@@ -104,5 +104,5 @@ def get_lengths_intervals(persistence_pairs, simplex_tree) -> list:
 
     criticality = []
     for pair in persistence_pairs:
-        criticality.append(np.sqrt(simplex_tree.filtration(pair[0])) - np.sqrt(simplex_tree.filtration(pair[1])))
+        criticality.append(np.sqrt(simplex_tree.filtration(pair[1])) - np.sqrt(simplex_tree.filtration(pair[0])))
     return criticality

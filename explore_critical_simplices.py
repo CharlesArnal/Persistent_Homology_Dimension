@@ -9,6 +9,59 @@ from basic_functions import test_criticality, circumcenter_of_simplex, compute_a
 
 
 
+def h_index_of_points(simplex_tree_with_persistence_already_computed, Acomplex, dimension : int, positive_or_negative = "positive", min_len_intervals = 1e-10, min_birth_value = 0.0):
+    """
+    Takes as input a simplex_tree st with persistence already computed, and its associated alpha complex Acomplex
+
+    The function returns the greatest integer h such that there are at least h points of the poins cloud that each belong to at least h critical simplices of the given dimension
+
+    If positive_or_negative = "positive", these simplices will correspond to birth point of intervals in the homology of degree dimension
+
+    If positive_or_negative = "positive", they will correspond to death point of intervals in the homology of degree (dimension - 1)
+
+    A simplex is considered critical if it gives birth or death to an interval of length at least len_intervals
+
+    Only simplices born after min_birth_value are considered
+    """
+    
+    st = simplex_tree_with_persistence_already_computed
+
+    if positive_or_negative == "positive":
+        homology_degree = dimension
+    else:
+        homology_degree = dimension - 1
+
+    # persistence_pairs are pairs of negative and negative simplices giving birth and death to an interval
+    # simplices are represented as sets of integers (each corresponding to a point in the points cloud)
+    critical_pairs_in_correct_degree = get_critical_pairs(st, homology_degree, min_len_intervals, min_birth_value, False)
+    critical_simpl_in_correct_degree = []
+    if positive_or_negative == "positive":
+        critical_simpl_in_correct_degree = [pair[0] for pair in critical_pairs_in_correct_degree]
+    else:
+        critical_simpl_in_correct_degree = [pair[1] for pair in critical_pairs_in_correct_degree]
+
+    # Go through all the simplices, count the number of appearances of each point 
+    # The points are stored (as integers) in a list
+    # Their number of appearances as integers in another list (such that the i-th entries of both lists correspond to each other)
+    # Not the most efficient way of doing it
+    if len(critical_simpl_in_correct_degree) == 0:
+        return 0
+    points = []
+    appearances = []
+    for simplex in critical_simpl_in_correct_degree:
+        for point in simplex:
+            if point in points:
+                index = points.index(point)
+                appearances[index] += 1
+            else:
+                points.append(point)
+                appearances.append(1)
+
+    appearances.sort(reverse=True)
+    h_index = 0
+    while(appearances[h_index]>=h_index+1):
+        h_index+=1
+    return h_index
 
 
 
@@ -27,6 +80,8 @@ def plot_crit_points_3D_points_cloud(simplex_tree_with_persistence_already_compu
     If positive_or_negative = "positive", they will correspond to death point of intervals in the homology of degree (dimension - 1)
 
     A simplex is considered critical if it gives birth or death to an interval of length at least len_intervals
+
+    Only simplices born after min_birth_value are considered
     
     """
     
