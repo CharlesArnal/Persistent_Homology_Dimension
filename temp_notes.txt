@@ -1,0 +1,10 @@
+Créer une section experimental results dans le Overleaf, la remplir
+Question à se poser :
+dimension de l'espace des points critiques
+
+Couleur des points en fonction du nombre de simplexes critiques auxquels ils appartiennent
+
+persistence totale dans toutes les situations
+longueur moyenne des intervalles et nombre des intervalles en fonction du nombre de points
+et tout ça en fonction des différentes dimensions
+vor ce que disait Vincent
